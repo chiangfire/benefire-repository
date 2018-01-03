@@ -55,6 +55,12 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+	
+	<scm>
+        <connection>scm:https://github.com/jiangcihuo/benefire-repository</connection>
+        <developerConnection>scm:https://github.com/jiangcihuo/benefire-repository</developerConnection>
+        <url>https://github.com/jiangcihuo/benefire-repository</url>
+    </scm>
 
 	<build>
 		<finalName>benefire-repository</finalName>
