@@ -242,7 +242,7 @@ public class RelationalRepositoryProxyManager implements RepositoryProxyManager{
 		}
 		
 		if(Keyword.DELETE.equals(pt.getSubjectKeyword())){
-			sb.append(Keyword.DELETE).append(" FROM ").append(tableName);
+			sb.append(Keyword.DELETE).append(" FROM ").append(tableName).append(" WHERE ");
 			return processor(buildCondition(sb,method,pt).toString(),method,paramSource);
 		}
 		

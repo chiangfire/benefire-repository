@@ -12,6 +12,10 @@ public final class ObjectUtil {
 			
 			return (List<?>)object;
 		}
+		if(object instanceof Object[]){
+			
+			return Arrays.asList((Object[])object);
+		}
 		return Arrays.asList(object);
 	}
 
