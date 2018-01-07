@@ -70,7 +70,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compilerplugin.version}</version>
 				<configuration>
-					<!-- open the parameter compiler -->
+					<!-- Open the parameter compiler -->
 					<parameters>true</parameters>
 					<source>${java.version}</source>
 					<target>${java.version}</target>

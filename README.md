@@ -94,6 +94,9 @@ public class Application {
 }
 ```
 
+# The use Eclipse needs to be open the parameter compiler.
+window ->  preferences -> java -> compiler -> [Check]{store information about method parameters(usable via reflection)}
+
 
 
 
