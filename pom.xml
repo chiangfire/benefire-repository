@@ -16,7 +16,7 @@
 		<java.version>1.8</java.version>
 		<compilerplugin.version>3.6.2</compilerplugin.version>
 		<guava.version>19.0</guava.version>
-		<springboot.version>1.5.9.RELEASE</springboot.version>
+		<spring-boot-autoconfigure.version>1.5.9.RELEASE</spring-boot-autoconfigure.version>
 		<springjdbc.version>4.3.13.RELEASE</springjdbc.version>
 	</properties>
 
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
-			<version>${springboot.version}</version>
+			<version>${spring-boot-autoconfigure.version}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>spring</artifactId>
@@ -55,12 +55,12 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-	
+
 	<scm>
-        <connection>scm:https://github.com/jiangcihuo/benefire-repository</connection>
-        <developerConnection>scm:https://github.com/jiangcihuo/benefire-repository</developerConnection>
-        <url>https://github.com/jiangcihuo/benefire-repository</url>
-    </scm>
+		<connection>scm:https://github.com/jiangcihuo/benefire-repository</connection>
+		<developerConnection>scm:https://github.com/jiangcihuo/benefire-repository</developerConnection>
+		<url>https://github.com/jiangcihuo/benefire-repository</url>
+	</scm>
 
 	<build>
 		<finalName>benefire-repository</finalName>
