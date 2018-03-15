@@ -281,10 +281,14 @@ public class RelationalRepositoryProxyManager implements RepositoryProxyManager{
 			}
 			//return entity value
 			if(!returnType.isPrimitive() && returnType.getSimpleName().lastIndexOf("[]") == -1){
-				return namedParameterJdbcOperations.queryForObject(sql,paramSource,(ResultSet rs, int rowNum) -> {
+				return namedParameterJdbcOperations.query(sql, paramSource, (ResultSet rs) -> {
+					
+					return resultSetToObject(rs,returnType);
+				});
+				/*return namedParameterJdbcOperations.queryForObject(sql,paramSource,(ResultSet rs, int rowNum) -> {
 					
 					return resultSetToObject(rs,rowNum,returnType);
-				});
+				});*/
 			}
 			//return primitive value
 			return namedParameterJdbcOperations.queryForObject(sql,paramSource, returnType);
@@ -437,19 +441,27 @@ public class RelationalRepositoryProxyManager implements RepositoryProxyManager{
 		return namedParameterJdbcOperations.queryForObject(sql, paramSource, long.class);
 	}
 	
+	private <T> T resultSetToObject(ResultSet rs,Class<T> t){
+		
+		return resultSetToObject(rs,0,t);
+	}
+	
 	private <T> T resultSetToObject(ResultSet rs, int rowNum,Class<T> t){
 		try {
-			T entity = t.newInstance();
-			List<EntityProperty> entityPropertys = EntityPropertyHelper.getEntityPropertys(t,false);
-			for(int i=0,size=entityPropertys.size();i<size;i++){
-				EntityProperty entityProperty = entityPropertys.get(i);
-				Method method = resultSetMethodMap.get(entityProperty.getPropertyType().getSimpleName().toUpperCase());
-				if(null != method){
-					Object value = ReflectionUtils.invokeJdbcMethod(method,rs,entityProperty.getColumnName());
-					entityProperty.setPropertyValue(entity, value);
+			if(null != rs && rs.next()){
+				T entity = t.newInstance();
+				List<EntityProperty> entityPropertys = EntityPropertyHelper.getEntityPropertys(t,false);
+				for(int i=0,size=entityPropertys.size();i<size;i++){
+					EntityProperty entityProperty = entityPropertys.get(i);
+					Method method = resultSetMethodMap.get(entityProperty.getPropertyType().getSimpleName().toUpperCase());
+					if(null != method){
+						Object value = ReflectionUtils.invokeJdbcMethod(method,rs,entityProperty.getColumnName());
+						entityProperty.setPropertyValue(entity, value);
+					}
 				}
+				return entity;
 			}
-			return entity;
+			return null;
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new IllegalArgumentException("entity initialization failure.",e);
 		} catch (SQLException e) {
