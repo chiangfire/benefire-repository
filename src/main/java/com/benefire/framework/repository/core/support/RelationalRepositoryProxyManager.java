@@ -79,7 +79,7 @@ public class RelationalRepositoryProxyManager implements RepositoryProxyManager{
 		resultSetMethodMap.put(Double.class.getSimpleName().toUpperCase(), ReflectionUtils.findMethod(ResultSet.class, "getDouble", String.class));
 		resultSetMethodMap.put(BigDecimal.class.getSimpleName().toUpperCase(), ReflectionUtils.findMethod(ResultSet.class, "getBigDecimal", String.class));
 		resultSetMethodMap.put(Byte[].class.getSimpleName().toUpperCase(), ReflectionUtils.findMethod(ResultSet.class, "getBytes", String.class));
-		resultSetMethodMap.put(Date.class.getSimpleName().toUpperCase(), ReflectionUtils.findMethod(ResultSet.class, "getDate", String.class));
+		resultSetMethodMap.put(Date.class.getSimpleName().toUpperCase(), ReflectionUtils.findMethod(ResultSet.class, "getTimestamp", String.class));
 		resultSetMethodMap.put(Time.class.getSimpleName().toUpperCase(), ReflectionUtils.findMethod(ResultSet.class, "getTime", String.class));
 		resultSetMethodMap.put(Timestamp.class.getSimpleName().toUpperCase(), ReflectionUtils.findMethod(ResultSet.class, "getTimestamp", String.class));
 	}
@@ -104,12 +104,22 @@ public class RelationalRepositoryProxyManager implements RepositoryProxyManager{
 		this.limitHandler = database.getLimitHandler();
 	}
 	
+	public <T> int replaceSave(T t){
+		
+		return insert(t, "REPLACE");
+	}
+	
 	public <T> int save(T t) {
+		
+		return insert(t,"INSERT");
+	}
+	
+	private <T> int insert(T t,String insertType){
 		Assert.notNull(t, "save object that be empty.");
 		List<?> datas = objectToList(t);
 		Assert.notEmpty(datas, "save collection that be empty.");
 		String tableName = getTableName(datas.get(0).getClass());
-	    StringBuilder sql = new StringBuilder("INSERT INTO ").append(tableName).append(" (");
+	    StringBuilder sql = new StringBuilder(insertType).append(" INTO ").append(tableName).append(" (");
 	    StringBuilder placeholder = new StringBuilder();
 	    List<EntityProperty> entityPropertys = EntityPropertyHelper.getEntityPropertys(datas.get(0).getClass(),true);
 	    if(!entityPropertys.isEmpty()){
@@ -217,6 +227,8 @@ public class RelationalRepositoryProxyManager implements RepositoryProxyManager{
 	@Override
 	public Object invokeProxyMethod(Method method, Object[] args) throws Throwable {
 		if("save".equals(method.getName())) return save(args[0]);
+		
+		if("replaceSave".equals(method.getName())) return replaceSave(args[0]);
 		
 		if("update".equals(method.getName())) return update(args[0]);
 		
