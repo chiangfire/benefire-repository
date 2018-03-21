@@ -18,14 +18,14 @@ public class PageRequest {
 	private Sort sort;
 	
 	
-	public PageRequest(int page, int size){
+	public PageRequest(int pageNumber, int pageSize){
 		
-		this(page,size,null);
+		this(pageNumber,pageSize,null);
 	}
 	
-	public PageRequest(int page, int size, Direction direction, String... properties) {
+	public PageRequest(int pageNumber, int pageSize, Direction direction, String... properties) {
 		
-		this(page, size, new Sort(direction, properties));
+		this(pageNumber, pageSize, new Sort(direction, properties));
 	}
 	
 	public PageRequest(int pageNumber, int pageSize, Sort sort) {

@@ -106,5 +106,11 @@ public class Page<T> implements Iterable<T>,Serializable{
 		}
 		return new Page<S>(result, pageRequest, totalCounts);
 	}
+
+	@Override
+	public String toString() {
+		return "Page [content=" + content + ", pageRequest=" + pageRequest + ", totalCounts=" + totalCounts
+				+ ", totalPages=" + totalPages + ", pageSize="+this.getPageSize() +", pageNumber="+ this.getPageNumber()+"]";
+	}
 	
 }
