@@ -56,10 +56,11 @@
 		</dependency>
 	</dependencies>
 
-	<scm>
-		<connection>scm:https://github.com/jiangcihuo/benefire-repository</connection>
-		<developerConnection>scm:https://github.com/jiangcihuo/benefire-repository</developerConnection>
-		<url>https://github.com/jiangcihuo/benefire-repository</url>
+    <scm>
+	    <connection>scm:git:git://github.com:chiangfire/benefire-repository.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:chiangfire/benefire-repository.git</developerConnection>
+		<url>https://github.com/chiangfire/benefire-repository</url>
+		<tag>HEAD</tag>
 	</scm>
 
 	<build>
